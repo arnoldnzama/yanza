@@ -4,8 +4,8 @@ const MOCK_JOBS = [
     id: "job-1",
     title: "Préparateur de commandes H/F",
     company: "Logisprint",
-    location: "Lyon, France",
-    country: "France",
+    location: "Kinshasa, RDC",
+    country: "RDC",
     contract: "interim",
     sector: "Logistique",
     salary: 1900,
@@ -19,8 +19,8 @@ const MOCK_JOBS = [
     id: "job-2",
     title: "Développeur Front-end React",
     company: "DigitalWave",
-    location: "Remote, France",
-    country: "France",
+    location: "Lubumbashi, RDC",
+    country: "RDC",
     contract: "mission",
     sector: "IT & Digital",
     salary: 3500,
@@ -64,8 +64,8 @@ const MOCK_JOBS = [
     id: "job-5",
     title: "Ouvrier BTP polyvalent",
     company: "BâtirPlus",
-    location: "Paris, France",
-    country: "France",
+    location: "Kinshasa, RDC",
+    country: "RDC",
     contract: "interim",
     sector: "BTP",
     salary: 2000,
@@ -794,59 +794,6 @@ function renderRecruiterJobs() {
           job.salary
         )}</strong> / mois</p>
         <p class="card-text">Publiée le ${formatDate(job.publishedAt)}</p>
-      </article>
-    `
-    )
-    .join("");
-}
-
-function initAdminView() {
-  renderAdminView();
-}
-
-function renderAdminView() {
-  const statsContainer = qs("#admin-stats");
-  const jobsContainer = qs("#admin-jobs");
-  if (!statsContainer || !jobsContainer) return;
-
-  const totalJobs = state.jobs.length;
-  const totalRecruiterJobs = state.recruiterJobs.length;
-  const totalInterim = state.jobs.filter(
-    (j) => j.contract === "interim"
-  ).length;
-
-  statsContainer.innerHTML = `
-    <div class="stat-card">
-      <div class="stat-card-label">Offres actives</div>
-      <div class="stat-card-value">${totalJobs}</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-label">Offres recruteurs</div>
-      <div class="stat-card-value">${totalRecruiterJobs}</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-card-label">Missions d’intérim</div>
-      <div class="stat-card-value">${totalInterim}</div>
-    </div>
-  `;
-
-  jobsContainer.innerHTML = state.jobs
-    .map(
-      (job) => `
-      <article class="card">
-        <div class="job-card-header">
-          <div>
-            <h3 class="card-title">${job.title}</h3>
-            <p class="card-subtitle">${job.company} • ${job.location}</p>
-          </div>
-          <span class="badge">${
-            job.contract === "interim" ? "Intérim" : job.contract
-          }</span>
-        </div>
-        <p class="card-text">Publiée le ${formatDate(
-          job.publishedAt
-        )}</p>
-        <p class="hint">Statut: en attente de validation (simulation front-end)</p>
       </article>
     `
     )
