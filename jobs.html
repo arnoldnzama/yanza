@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Offres d’emploi en intérim et contrats courts — Yanza Intérim."
+    />
+    <title>Offres d’emploi intérim | Yanza Intérim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .jobs-hero {
+        padding: 2.2rem 5vw 1.2rem;
+      }
+      .jobs-hero h1 {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: clamp(2rem, 2.5vw + 1rem, 2.6rem);
+        margin: 0 0 0.4rem;
+      }
+      .jobs-hero p {
+        max-width: 720px;
+        color: #4b5563;
+      }
+      .jobs-layout {
+        padding: 0 5vw 3rem;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 2rem;
+      }
+      @media (max-width: 900px) {
+        .jobs-layout {
+          grid-template-columns: minmax(0, 1fr);
+          padding-inline: 4vw;
+        }
+      }
+      @media (max-width: 560px) {
+        .jobs-hero,
+        .jobs-layout {
+          padding-inline: 5vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="index.html#home" class="logo" aria-label="Yanza Intérim - Accueil">
+        <span class="logo-mark">Y</span>
+        <span class="logo-text">Yanza Intérim</span>
+      </a>
+      <button
+        class="nav-toggle"
+        aria-label="Ouvrir le menu de navigation"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html#home">Accueil</a></li>
+          <li><a href="jobs.html" aria-current="page">Offres d'emploi</a></li>
+          <li><a href="post-offer.html">Déposer une offre</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="index.html#recruiter">Espace recruteur</a></li>
+          <li><a href="index.html#admin">Admin</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn ghost" href="jobs.html">Rechercher un emploi</a>
+          <a class="btn primary" href="post-offer.html">Déposer une offre</a>
+        </div>
+      </nav>
+    </header>
+
+    <main tabindex="-1">
+      <section class="jobs-hero">
+        <h1>Offres d’emploi en intérim</h1>
+        <p>
+          Filtrez les missions par métier, localisation, durée, salaire et date de
+          publication. Cliquez sur une offre pour voir le détail et postuler en ligne
+          avec votre CV et votre lettre de motivation.
+        </p>
+      </section>
+
+      <section class="jobs-layout" aria-label="Liste des offres et filtres">
+        <aside class="filters" aria-label="Filtres des offres">
+          <form id="job-filters">
+            <fieldset>
+              <legend>Métier / mot-clé</legend>
+              <input
+                type="text"
+                name="keyword"
+                placeholder="Intitulé de poste, compétence..."
+              />
+            </fieldset>
+            <fieldset>
+              <legend>Ville / Pays</legend>
+              <input
+                type="text"
+                name="location"
+                placeholder="Ville, région ou pays"
+              />
+            </fieldset>
+            <fieldset>
+              <legend>Durée</legend>
+              <select name="duration">
+                <option value="">Toutes</option>
+                <option value="1-3">1 à 3 mois</option>
+                <option value="3-6">3 à 6 mois</option>
+                <option value="6+">Plus de 6 mois</option>
+              </select>
+            </fieldset>
+            <fieldset>
+              <legend>Salaire mensuel (min.)</legend>
+              <input type="number" name="salaryMin" min="0" step="100" />
+            </fieldset>
+            <fieldset>
+              <legend>Date de publication</legend>
+              <select name="published">
+                <option value="">Toutes</option>
+                <option value="24h">Dernières 24h</option>
+                <option value="7d">Moins de 7 jours</option>
+                <option value="30d">Moins de 30 jours</option>
+              </select>
+            </fieldset>
+            <button type="submit" class="btn primary full-width">
+              Appliquer les filtres
+            </button>
+            <button type="button" class="btn ghost full-width" id="reset-filters">
+              Réinitialiser
+            </button>
+          </form>
+        </aside>
+
+        <section class="results" aria-live="polite">
+          <div class="results-header">
+            <p id="results-count"></p>
+            <label class="sort">
+              <span>Trier par</span>
+              <select id="sort-select">
+                <option value="newest">Les plus récentes</option>
+                <option value="salary-desc">Salaire décroissant</option>
+                <option value="salary-asc">Salaire croissant</option>
+              </select>
+            </label>
+          </div>
+          <div id="jobs-list" class="card-list"></div>
+          <nav
+            class="pagination"
+            aria-label="Pagination des offres"
+            id="jobs-pagination"
+          ></nav>
+          <article id="job-detail-panel" class="job-detail panel" hidden>
+            <div class="job-detail-header">
+              <div>
+                <h2 id="detail-title" class="job-detail-title"></h2>
+                <p id="detail-company"></p>
+                <div id="detail-meta" class="job-detail-meta"></div>
+              </div>
+              <button class="btn primary" type="button" id="detail-apply-btn">
+                Postuler maintenant
+              </button>
+            </div>
+            <div class="job-detail-body">
+              <section>
+                <h3 class="job-section-title">Description du poste</h3>
+                <p id="detail-description"></p>
+              </section>
+              <aside class="job-detail-aside">
+                <dl>
+                  <dt>Entreprise</dt>
+                  <dd id="detail-company-2"></dd>
+                  <dt>Lieu</dt>
+                  <dd id="detail-location"></dd>
+                  <dt>Durée</dt>
+                  <dd id="detail-duration"></dd>
+                  <dt>Rémunération mensuelle</dt>
+                  <dd id="detail-salary"></dd>
+                  <dt>Date de début</dt>
+                  <dd id="detail-start"></dd>
+                </dl>
+              </aside>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <!-- Modal Candidature -->
+    <div
+      class="modal"
+      id="apply-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="apply-modal-title"
+    >
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-dialog" role="document">
+        <button
+          class="modal-close"
+          type="button"
+          aria-label="Fermer la fenêtre de candidature"
+          data-close-modal
+        >
+          ×
+        </button>
+        <h2 id="apply-modal-title">Postuler à cette offre</h2>
+        <p id="apply-job-title" class="modal-subtitle"></p>
+        <form id="apply-form" novalidate>
+          <label class="field">
+            <span class="field-label">Nom complet *</span>
+            <input type="text" name="fullName" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span class="field-label">Email *</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">Téléphone *</span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              autocomplete="tel"
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">CV (PDF ou DOC) *</span>
+            <input
+              type="file"
+              name="cv"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">Lettre de motivation (optionnelle)</span>
+            <textarea
+              name="coverLetter"
+              rows="4"
+              placeholder="Quelques lignes pour vous présenter..."
+            ></textarea>
+          </label>
+          <fieldset>
+            <legend>Mode de candidature</legend>
+            <label class="checkbox">
+              <input
+                type="checkbox"
+                name="quickApply"
+                value="1"
+                checked
+              />
+              <span>Candidature rapide (création de profil ultérieure)</span>
+            </label>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">
+              Postuler maintenant
+            </button>
+          </div>
+          <p
+            id="apply-message"
+            class="form-message"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div>
+          <div class="logo">
+            <span class="logo-mark">Y</span>
+            <span class="logo-text">Yanza Intérim</span>
+          </div>
+          <p>
+            Plateforme de recrutement spécialisée en intérim et missions temporaires,
+            conçue pour les candidats, entreprises et agences.
+          </p>
+          <div class="socials" aria-label="Réseaux sociaux">
+            <a href="#" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.6 20v-6h2.1l.3-2.3h-2.4V9.7c0-.7.2-1.2 1.2-1.2h1.3V6.4c-.2 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2h-2.2V14h2.2v6h3.2Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter/X">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4 5h3.1l4 4.8 4.3-4.8H19l-5.6 6.1L19.5 19h-3.1l-4.3-5.1L7.3 19H4.5l6.1-6.9Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5.2 9H2.4V19h2.8V9Zm.2-3.5a1.7 1.7 0 1 0-3.4 0 1.7 1.7 0 0 0 3.4 0ZM21 19v-6.1c0-3.3-1.8-4.8-4.2-4.8-1.9 0-2.8 1-3.2 1.7V9h-2.8v10h2.8v-5.6c0-1 .2-2 1.6-2 1.3 0 1.3 1.2 1.3 2.1V19H21Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-columns">
+          <div>
+            <h3>Candidats</h3>
+            <ul>
+              <li><a href="jobs.html" class="link">Rechercher un emploi</a></li>
+              <li><a href="index.html#home" class="link">Secteurs populaires</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Recruteurs</h3>
+            <ul>
+              <li><a href="index.html#recruiter" class="link">Publier une offre</a></li>
+              <li><a href="index.html#recruiter" class="link">Tableau de bord</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Entreprise</h3>
+            <ul>
+              <li><a href="index.html#home" class="link">À propos</a></li>
+              <li><a href="index.html#home" class="link">Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> Yanza Intérim. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      const MOCK_JOBS = [
+        {
+          id: "job-1",
+          title: "Préparateur de commandes H/F",
+          company: "Logisprint",
+          location: "Lyon, France",
+          country: "France",
+          contract: "interim",
+          sector: "Logistique",
+          salary: 1900,
+          durationMonths: 3,
+          startDate: "2026-02-01",
+          publishedAt: "2026-01-05",
+          description:
+            "Préparation de commandes, gestion des stocks, contrôle qualité. Travail en 2x8.",
+        },
+        {
+          id: "job-2",
+          title: "Développeur Front-end React",
+          company: "DigitalWave",
+          location: "Remote, France",
+          country: "France",
+          contract: "mission",
+          sector: "IT & Digital",
+          salary: 3500,
+          durationMonths: 6,
+          startDate: "2026-01-20",
+          publishedAt: "2026-01-03",
+          description:
+            "Développement d’interfaces en React, intégration API REST, bonnes pratiques UX/UI, tests unitaires. Environnement 100% remote.",
+        },
+        {
+          id: "job-6",
+          title: "Chef de chantier adjoint",
+          company: "BTP Nord",
+          location: "Lille, France",
+          country: "France",
+          contract: "interim",
+          sector: "BTP",
+          salary: 2600,
+          durationMonths: 5,
+          startDate: "2026-02-10",
+          publishedAt: "2026-01-06",
+          description:
+            "Suivi de chantier, coordination des équipes, respect des normes sécurité, gestion des sous-traitants.",
+        },
+        {
+          id: "job-7",
+          title: "Comptable auxiliaire",
+          company: "Finexa",
+          location: "Casablanca, Maroc",
+          country: "Maroc",
+          contract: "cdd",
+          sector: "Finance",
+          salary: 2400,
+          durationMonths: 6,
+          startDate: "2026-02-05",
+          publishedAt: "2026-01-04",
+          description:
+            "Saisie factures, rapprochements bancaires, relances clients. Outils ERP appréciés.",
+        },
+        {
+          id: "job-8",
+          title: "Infirmier(ère) coordinateur(trice)",
+          company: "SantéPlus",
+          location: "Bruxelles, Belgique",
+          country: "Belgique",
+          contract: "mission",
+          sector: "Santé",
+          salary: 3000,
+          durationMonths: 4,
+          startDate: "2026-01-28",
+          publishedAt: "2026-01-02",
+          description:
+            "Coordination des soins, planification des équipes, relation familles, reporting médical.",
+        },
+        {
+          id: "job-3",
+          title: "Technicien de maintenance industrielle",
+          company: "IndusTech",
+          location: "Tanger, Maroc",
+          country: "Maroc",
+          contract: "interim",
+          sector: "Industrie",
+          salary: 2200,
+          durationMonths: 12,
+          startDate: "2026-02-15",
+          publishedAt: "2025-12-28",
+          description:
+            "Maintenance préventive et curative de lignes de production. Compétences électro/automatisme appréciées.",
+        },
+        {
+          id: "job-4",
+          title: "Agent d’accueil bilingue",
+          company: "Airport Services",
+          location: "Bruxelles, Belgique",
+          country: "Belgique",
+          contract: "cdd",
+          sector: "Services",
+          salary: 2100,
+          durationMonths: 4,
+          startDate: "2026-01-25",
+          publishedAt: "2025-12-30",
+          description:
+            "Accueil et orientation des passagers, gestion infos vols, accompagnement PMR. Anglais B2 requis.",
+        },
+      ];
+
+      const JOBS_PER_PAGE = 4;
+      const state = {
+        jobs: [...MOCK_JOBS],
+        filters: {
+          keyword: "",
+          location: "",
+          duration: "",
+          salaryMin: "",
+          published: "",
+        },
+        sort: "newest",
+        currentPage: 1,
+        currentJobId: null,
+      };
+
+      function qs(sel, scope = document) {
+        return scope.querySelector(sel);
+      }
+      function qsa(sel, scope = document) {
+        return Array.from(scope.querySelectorAll(sel));
+      }
+      function formatCurrency(value) {
+        if (!value && value !== 0) return "Non précisé";
+        return new Intl.NumberFormat("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+          maximumFractionDigits: 0,
+        }).format(value);
+      }
+      function formatDate(value) {
+        return new Intl.DateTimeFormat("fr-FR", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }).format(new Date(value));
+      }
+      function daysSince(dateStr) {
+        return Math.floor(
+          (Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24)
+        );
+      }
+
+      function init() {
+        initNavToggle();
+        initFilters();
+        renderList();
+        initModal();
+        const yearSpan = qs("#current-year");
+        if (yearSpan) yearSpan.textContent = String(new Date().getFullYear());
+      }
+
+      function initNavToggle() {
+        const navToggle = qs(".nav-toggle");
+        const mainNav = qs(".main-nav");
+        if (!navToggle || !mainNav) return;
+        navToggle.addEventListener("click", () => {
+          const isOpen = mainNav.classList.toggle("is-open");
+          navToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+
+      function initFilters() {
+        const form = qs("#job-filters");
+        const resetBtn = qs("#reset-filters");
+        const sortSelect = qs("#sort-select");
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const data = new FormData(form);
+            state.filters.keyword = (data.get("keyword") || "").toString();
+            state.filters.location = (data.get("location") || "").toString();
+            state.filters.duration = (data.get("duration") || "").toString();
+            state.filters.salaryMin = (data.get("salaryMin") || "").toString();
+            state.filters.published = (data.get("published") || "").toString();
+            state.currentPage = 1;
+            renderList();
+          });
+        }
+        if (resetBtn && form) {
+          resetBtn.addEventListener("click", () => {
+            form.reset();
+            state.filters = {
+              keyword: "",
+              location: "",
+              duration: "",
+              salaryMin: "",
+              published: "",
+            };
+            state.currentPage = 1;
+            renderList();
+          });
+        }
+        if (sortSelect) {
+          sortSelect.addEventListener("change", () => {
+            state.sort = sortSelect.value;
+            state.currentPage = 1;
+            renderList();
+          });
+        }
+      }
+
+      function applyFiltersAndSort() {
+        let jobs = [...state.jobs];
+        const { keyword, location, duration, salaryMin, published } = state.filters;
+        if (keyword) {
+          const kw = keyword.toLowerCase();
+          jobs = jobs.filter(
+            (j) =>
+              j.title.toLowerCase().includes(kw) ||
+              j.company.toLowerCase().includes(kw) ||
+              (j.sector && j.sector.toLowerCase().includes(kw))
+          );
+        }
+        if (location) {
+          const loc = location.toLowerCase();
+          jobs = jobs.filter(
+            (j) =>
+              j.location.toLowerCase().includes(loc) ||
+              j.country.toLowerCase().includes(loc)
+          );
+        }
+        if (duration) {
+          jobs = jobs.filter((j) => {
+            const d = j.durationMonths || 0;
+            if (duration === "1-3") return d <= 3;
+            if (duration === "3-6") return d > 3 && d <= 6;
+            if (duration === "6+") return d > 6;
+            return true;
+          });
+        }
+        if (salaryMin) {
+          const min = Number(salaryMin);
+          jobs = jobs.filter((j) => (j.salary || 0) >= min);
+        }
+        if (published) {
+          jobs = jobs.filter((j) => {
+            const days = daysSince(j.publishedAt);
+            if (published === "24h") return days <= 1;
+            if (published === "7d") return days <= 7;
+            if (published === "30d") return days <= 30;
+            return true;
+          });
+        }
+        jobs.sort((a, b) => {
+          if (state.sort === "salary-desc") return (b.salary || 0) - (a.salary || 0);
+          if (state.sort === "salary-asc") return (a.salary || 0) - (b.salary || 0);
+          return (
+            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          );
+        });
+        return jobs;
+      }
+
+      function createJobCard(job) {
+        const days = daysSince(job.publishedAt);
+        const isNew = days <= 7;
+        const durationText = job.durationMonths
+          ? `${job.durationMonths} mois`
+          : "Durée non précisée";
+        const card = document.createElement("article");
+        card.className = "card job-card";
+        card.tabIndex = 0;
+        card.dataset.jobId = job.id;
+        card.innerHTML = `
+          <div class="job-card-header">
+            <div>
+              <h3 class="card-title">${job.title}</h3>
+              <p class="card-subtitle">${job.company}</p>
+            </div>
+            <div class="job-badges">
+              ${isNew ? '<span class="badge primary">Nouveau</span>' : ""}
+              <span class="badge">${
+                job.contract === "interim"
+                  ? "Intérim"
+                  : job.contract === "cdd"
+                  ? "CDD"
+                  : "Mission courte"
+              }</span>
+            </div>
+          </div>
+          <p class="card-text">${job.location} • ${durationText}</p>
+          <p class="card-text">${formatCurrency(
+            job.salary
+          )} / mois • Publiée le ${formatDate(job.publishedAt)}</p>
+          <div class="job-meta">
+            <span>${job.sector || "Secteur non précisé"}</span>
+            <span>${formatCurrency(job.salary)} / mois</span>
+            <span>Début ${formatDate(job.startDate)}</span>
+          </div>
+        `;
+        card.addEventListener("click", () => openDetail(job.id));
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openDetail(job.id);
+          }
+        });
+        return card;
+      }
+
+      function renderList() {
+        const jobs = applyFiltersAndSort();
+        const list = qs("#jobs-list");
+        const countEl = qs("#results-count");
+        const pagination = qs("#jobs-pagination");
+        if (!list || !pagination || !countEl) return;
+
+        const total = jobs.length;
+        countEl.textContent =
+          total === 0
+            ? "Aucune offre ne correspond à vos critères."
+            : `${total} offre${total > 1 ? "s" : ""} trouvée${total > 1 ? "s" : ""}`;
+
+        const totalPages = Math.max(1, Math.ceil(total / JOBS_PER_PAGE));
+        if (state.currentPage > totalPages) state.currentPage = totalPages;
+        const start = (state.currentPage - 1) * JOBS_PER_PAGE;
+        const pageJobs = jobs.slice(start, start + JOBS_PER_PAGE);
+
+        list.innerHTML = "";
+        pageJobs.forEach((job) => list.appendChild(createJobCard(job)));
+
+        pagination.innerHTML = "";
+        if (totalPages > 1) {
+          const prev = document.createElement("button");
+          prev.textContent = "Précédent";
+          prev.className = "page-btn";
+          prev.disabled = state.currentPage === 1;
+          prev.onclick = () => {
+            if (state.currentPage > 1) {
+              state.currentPage--;
+              renderList();
+            }
+          };
+          pagination.appendChild(prev);
+
+          for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.textContent = String(i);
+            btn.className = "page-btn";
+            if (i === state.currentPage) btn.setAttribute("aria-current", "page");
+            btn.onclick = () => {
+              state.currentPage = i;
+              renderList();
+            };
+            pagination.appendChild(btn);
+          }
+
+          const next = document.createElement("button");
+          next.textContent = "Suivant";
+          next.className = "page-btn";
+          next.disabled = state.currentPage === totalPages;
+          next.onclick = () => {
+            if (state.currentPage < totalPages) {
+              state.currentPage++;
+              renderList();
+            }
+          };
+          pagination.appendChild(next);
+        }
+      }
+
+      // --- Détail + modal candidature
+      let lastFocus = null;
+      function openDetail(jobId) {
+        const job = state.jobs.find((j) => j.id === jobId);
+        if (!job) return;
+        state.currentJobId = jobId;
+        renderDetail(job);
+      }
+
+      function renderDetail(job) {
+        const panel = qs("#job-detail-panel");
+        if (!panel) return;
+        const durationText = job.durationMonths
+          ? `${job.durationMonths} mois`
+          : "Non précisée";
+        qs("#detail-title").textContent = job.title;
+        qs("#detail-company").textContent = `${job.company} • ${job.location}`;
+        qs("#detail-company-2").textContent = job.company;
+        qs("#detail-location").textContent = job.location;
+        qs("#detail-duration").textContent = durationText;
+        qs("#detail-salary").textContent = formatCurrency(job.salary);
+        qs("#detail-start").textContent = formatDate(job.startDate);
+        qs("#detail-description").textContent = job.description;
+        const meta = qs("#detail-meta");
+        if (meta) {
+          meta.innerHTML = `
+            <span>${job.contract === "interim" ? "Intérim" : job.contract === "cdd" ? "CDD" : "Mission courte"}</span>
+            <span>${durationText}</span>
+            <span>Publiée le ${formatDate(job.publishedAt)}</span>
+          `;
+        }
+        const applyBtn = qs("#detail-apply-btn");
+        if (applyBtn) {
+          applyBtn.onclick = () => openModal(job);
+        }
+        panel.hidden = false;
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function initModal() {
+        const modal = qs("#apply-modal");
+        if (!modal) return;
+        modal.addEventListener("click", (e) => {
+          const target = e.target;
+          if (!(target instanceof HTMLElement)) return;
+          if (target.hasAttribute("data-close-modal")) closeModal();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
+            closeModal();
+          }
+        });
+
+        const form = qs("#apply-form");
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            handleApply();
+          });
+        }
+      }
+
+      function openModal(job) {
+        const modal = qs("#apply-modal");
+        if (!modal) return;
+        lastFocus = document.activeElement;
+        const title = qs("#apply-job-title");
+        if (title) title.textContent = `${job.title} — ${job.company} (${job.location})`;
+        const msg = qs("#apply-message");
+        if (msg) msg.textContent = "";
+        const form = qs("#apply-form");
+        if (form) form.reset();
+        modal.setAttribute("aria-hidden", "false");
+        const first = qs("#apply-form input[name='fullName']");
+        if (first) first.focus();
+      }
+
+      function closeModal() {
+        const modal = qs("#apply-modal");
+        if (!modal) return;
+        modal.setAttribute("aria-hidden", "true");
+        if (lastFocus && lastFocus instanceof HTMLElement) lastFocus.focus();
+      }
+
+      function handleApply() {
+        const form = qs("#apply-form");
+        const msg = qs("#apply-message");
+        if (!form || !msg) return;
+        const data = new FormData(form);
+        const fullName = (data.get("fullName") || "").toString().trim();
+        const email = (data.get("email") || "").toString().trim();
+        const phone = (data.get("phone") || "").toString().trim();
+        const cv = data.get("cv");
+        if (!fullName || !email || !phone || !cv) {
+          msg.textContent = "Merci de remplir tous les champs obligatoires.";
+          msg.style.color = "#b91c1c";
+          return;
+        }
+        msg.textContent =
+          "Votre candidature a été envoyée (simulation). Un email de confirmation vous sera adressé.";
+        msg.style.color = "#047857";
+        setTimeout(closeModal, 1800);
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Blog Yanza Intérim : conseils pour les missions d’intérim, la gestion des candidatures et le recrutement en contrats courts."
+    />
+    <title>Blog Intérim — Conseils candidats & recruteurs | Yanza Intérim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .blog-hero {
+        padding: 2.5rem 5vw 1.5rem;
+      }
+      .blog-hero-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.78rem;
+        color: #0f3e9e;
+        font-weight: 600;
+        background-color: rgba(191, 219, 254, 0.7);
+        padding: 0.3rem 0.9rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .blog-hero h1 {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: clamp(2rem, 2.4vw + 1rem, 2.6rem);
+        margin: 0.8rem 0 0.4rem;
+      }
+      .blog-hero p {
+        max-width: 640px;
+        color: #4b5563;
+      }
+      .blog-layout {
+        padding: 0 5vw 3rem;
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 2rem;
+      }
+      .blog-sidebar {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 1.1rem 1rem;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+      }
+      .blog-sidebar h2 {
+        margin-top: 0;
+        font-size: 1rem;
+      }
+      .blog-categories {
+        list-style: none;
+        padding: 0;
+        margin: 0.6rem 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-size: 0.9rem;
+      }
+      .blog-categories button {
+        text-align: left;
+        width: 100%;
+        padding: 0.35rem 0.55rem;
+        border-radius: 999px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        color: #4b5563;
+      }
+      .blog-categories button[aria-pressed="true"] {
+        background-color: #e0ecff;
+        color: #1456c6;
+      }
+      .blog-card-title {
+        font-size: 1.1rem;
+        margin: 0 0 0.2rem;
+      }
+      .blog-meta {
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin-bottom: 0.4rem;
+      }
+      .blog-tag {
+        border-radius: 999px;
+        padding: 0.15rem 0.5rem;
+        font-size: 0.75rem;
+        background-color: rgba(15, 23, 42, 0.03);
+      }
+      .blog-excerpt {
+        font-size: 0.9rem;
+        color: #374151;
+      }
+      @media (max-width: 780px) {
+        .blog-hero {
+          padding-inline: 4vw;
+        }
+        .blog-layout {
+          padding-inline: 4vw;
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+      @media (max-width: 520px) {
+        .blog-hero {
+          padding-inline: 5vw;
+        }
+        .blog-layout {
+          padding-inline: 5vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="index.html#home" class="logo" aria-label="Yanza Intérim - Accueil">
+        <span class="logo-mark">Y</span>
+        <span class="logo-text">Yanza Intérim</span>
+      </a>
+      <button
+        class="nav-toggle"
+        aria-label="Ouvrir le menu de navigation"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html#home">Accueil</a></li>
+          <li><a href="jobs.html">Offres d'emploi</a></li>
+          <li><a href="post-offer.html">Déposer une offre</a></li>
+          <li><a href="blog.html" aria-current="page">Blog</a></li>
+          <li><a href="index.html#recruiter">Espace recruteur</a></li>
+          <li><a href="index.html#admin">Admin</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn ghost" href="jobs.html">Rechercher un emploi</a>
+          <a class="btn primary" href="post-offer.html">Déposer une offre</a>
+        </div>
+      </nav>
+    </header>
+
+    <main tabindex="-1">
+      <section class="blog-hero">
+        <p class="blog-hero-kicker">Blog intérim & missions temporaires</p>
+        <h1>Conseils pour réussir vos missions d’intérim</h1>
+        <p>
+          Ressources pratiques pour les candidats, les entreprises et les agences :
+          CV, entretien, droits des intérimaires, gestion des missions, recrutement en
+          contrats courts, et plus encore.
+        </p>
+      </section>
+
+      <section
+        class="blog-layout"
+        aria-label="Articles du blog sur l’intérim et les missions temporaires"
+      >
+        <aside class="blog-sidebar" aria-label="Catégories du blog">
+          <h2>Catégories</h2>
+          <ul class="blog-categories" id="blog-categories"></ul>
+        </aside>
+
+        <section class="blog-content" aria-live="polite">
+          <div id="blog-list" class="card-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div>
+          <div class="logo">
+            <span class="logo-mark">Y</span>
+            <span class="logo-text">Yanza Intérim</span>
+          </div>
+          <p>
+            Plateforme de recrutement spécialisée en intérim et missions temporaires,
+            conçue pour les candidats, entreprises et agences.
+          </p>
+          <div class="socials" aria-label="Réseaux sociaux">
+            <a href="#" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.6 20v-6h2.1l.3-2.3h-2.4V9.7c0-.7.2-1.2 1.2-1.2h1.3V6.4c-.2 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2h-2.2V14h2.2v6h3.2Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter/X">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4 5h3.1l4 4.8 4.3-4.8H19l-5.6 6.1L19.5 19h-3.1l-4.3-5.1L7.3 19H4.5l6.1-6.9Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5.2 9H2.4V19h2.8V9Zm.2-3.5a1.7 1.7 0 1 0-3.4 0 1.7 1.7 0 0 0 3.4 0ZM21 19v-6.1c0-3.3-1.8-4.8-4.2-4.8-1.9 0-2.8 1-3.2 1.7V9h-2.8v10h2.8v-5.6c0-1 .2-2 1.6-2 1.3 0 1.3 1.2 1.3 2.1V19H21Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-columns">
+          <div>
+            <h3>Candidats</h3>
+            <ul>
+              <li>
+                <a href="index.html#jobs" class="link">Rechercher un emploi</a>
+              </li>
+              <li>
+                <a href="index.html#home" class="link">Secteurs populaires</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>Recruteurs</h3>
+            <ul>
+              <li>
+                <a href="index.html#recruiter" class="link">Publier une offre</a>
+              </li>
+              <li>
+                <a href="index.html#recruiter" class="link">Tableau de bord</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>Entreprise</h3>
+            <ul>
+              <li><a href="index.html#home" class="link">À propos</a></li>
+              <li><a href="index.html#home" class="link">Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          © <span id="current-year"></span> Yanza Intérim. Tous droits réservés.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const BLOG_POSTS = [
+        {
+          id: "blog-1",
+          title:
+            "Comment préparer un CV efficace pour une mission d’intérim ?",
+          category: "Candidats",
+          publishedAt: "2025-12-15",
+          readMinutes: 6,
+          excerpt:
+            "Un CV d’intérim doit être clair, orienté missions et compétences clés. Découvrez les sections indispensables et les erreurs à éviter.",
+        },
+        {
+          id: "blog-2",
+          title: "Intérim : quels sont vos droits en tant que salarié ?",
+          category: "Réglementation",
+          publishedAt: "2025-11-30",
+          readMinutes: 8,
+          excerpt:
+            "Congés, rémunération, sécurité au travail… Tour d’horizon des principaux droits attachés au statut d’intérimaire.",
+        },
+        {
+          id: "blog-3",
+          title:
+            "5 bonnes pratiques pour recruter rapidement en intérim sans sacrifier la qualité",
+          category: "Recruteurs",
+          publishedAt: "2025-12-05",
+          readMinutes: 7,
+          excerpt:
+            "Définition du besoin, scorecards, entretiens structurés : les leviers pour trouver des profils adaptés en un temps record.",
+        },
+        {
+          id: "blog-4",
+          title:
+            "Missions courtes à l’international : bien se préparer avant de partir",
+          category: "Candidats",
+          publishedAt: "2025-10-20",
+          readMinutes: 5,
+          excerpt:
+            "Formalités administratives, couverture santé, logement : les points à vérifier pour une mission d’intérim à l’étranger.",
+        },
+      ];
+
+      function formatDate(value) {
+        return new Intl.DateTimeFormat("fr-FR", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }).format(new Date(value));
+      }
+
+      function initBlog() {
+        const categoriesContainer = document.getElementById("blog-categories");
+        const listContainer = document.getElementById("blog-list");
+        if (!categoriesContainer || !listContainer) return;
+
+        const categories = [
+          "Tous",
+          ...Array.from(new Set(BLOG_POSTS.map((p) => p.category))),
+        ];
+
+        categoriesContainer.innerHTML = categories
+          .map(
+            (cat, index) => `
+            <li>
+              <button type="button" data-category="${cat}" aria-pressed="${
+              index === 0 ? "true" : "false"
+            }">
+                ${cat}
+              </button>
+            </li>
+          `
+          )
+          .join("");
+
+        let currentCategory = "Tous";
+
+        function renderPosts() {
+          let posts = [...BLOG_POSTS];
+          if (currentCategory !== "Tous") {
+            posts = posts.filter((p) => p.category === currentCategory);
+          }
+          posts.sort(
+            (a, b) =>
+              new Date(b.publishedAt).getTime() -
+              new Date(a.publishedAt).getTime()
+          );
+
+          if (posts.length === 0) {
+            listContainer.innerHTML =
+              '<p class="hint">Aucun article dans cette catégorie pour le moment.</p>';
+            return;
+          }
+
+          listContainer.innerHTML = posts
+            .map(
+              (post) => `
+              <article class="card">
+                <h2 class="blog-card-title">${post.title}</h2>
+                <p class="blog-meta">
+                  Publié le ${formatDate(post.publishedAt)} · ${
+                post.readMinutes
+              } min de lecture
+                  · <span class="blog-tag">${post.category}</span>
+                </p>
+                <p class="blog-excerpt">${post.excerpt}</p>
+              </article>
+            `
+            )
+            .join("");
+        }
+
+        categoriesContainer.addEventListener("click", (e) => {
+          const target = e.target;
+          if (!(target instanceof HTMLElement)) return;
+          const btn = target.closest("button[data-category]");
+          if (!btn) return;
+          const category = btn.getAttribute("data-category");
+          if (!category) return;
+          currentCategory = category;
+          Array.from(
+            categoriesContainer.querySelectorAll("button[data-category]")
+          ).forEach((b) =>
+            b.setAttribute(
+              "aria-pressed",
+              b.getAttribute("data-category") === category ? "true" : "false"
+            )
+          );
+          renderPosts();
+        });
+
+        renderPosts();
+      }
+
+      function initNavToggle() {
+        const navToggle = document.querySelector(".nav-toggle");
+        const mainNav = document.querySelector(".main-nav");
+        if (!navToggle || !mainNav) return;
+        navToggle.addEventListener("click", () => {
+          const isOpen = mainNav.classList.toggle("is-open");
+          navToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const yearSpan = document.getElementById("current-year");
+        if (yearSpan) yearSpan.textContent = String(new Date().getFullYear());
+        initNavToggle();
+        initBlog();
+      });
+    </script>
+  </body>
+</html>
+
+

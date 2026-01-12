@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Plateforme professionnelle de recherche et de publication d’offres d’emploi en intérim, missions temporaires et contrats courts."
+    />
+    <title>Yanza Intérim — Plateforme d'offres d'emploi en intérim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#home" class="logo" aria-label="Yanza Intérim - Accueil">
+        <span class="logo-mark">Y</span>
+        <span class="logo-text">Yanza Intérim</span>
+      </a>
+      <button
+        class="nav-toggle"
+        aria-label="Ouvrir le menu de navigation"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="#home" data-view="home">Accueil</a></li>
+          <li><a href="jobs.html">Offres d'emploi</a></li>
+          <li><a href="post-offer.html">Déposer une offre</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#recruiter" data-view="recruiter">Espace recruteur</a></li>
+          <li><a href="#admin" data-view="admin">Admin</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a class="btn ghost" href="jobs.html">Rechercher un emploi</a>
+          <a class="btn primary" href="post-offer.html">Déposer une offre</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <!-- Vue Accueil -->
+      <section id="home-view" class="view is-active" aria-label="Accueil Yanza Intérim">
+        <section class="hero">
+          <div class="hero-content">
+            <p class="hero-kicker">Plateforme spécialisée en missions d’intérim</p>
+            <h1> Trouvez votre prochaine mission d’intérim en toute simplicité </h1>
+            <p class="hero-subtitle">
+              Des milliers d’offres d’intérim, missions temporaires et contrats courts,
+              vérifiées et publiées par des recruteurs de confiance.
+            </p>
+            <form
+              class="search-bar"
+              id="global-search-form"
+              aria-label="Recherche rapide d'offres"
+            >
+              <label class="field">
+                <span class="field-label">Métier, mot-clé…</span>
+                <input
+                  type="text"
+                  name="keyword"
+                  placeholder="Ex. préparateur de commandes, développeur..."
+                />
+              </label>
+              <label class="field">
+                <span class="field-label">Localisation</span>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Ville, région, pays"
+                />
+              </label>
+              <label class="field">
+                <span class="field-label">Type de contrat</span>
+                <select name="contract">
+                  <option value="">Tous</option>
+                  <option value="interim">Intérim</option>
+                  <option value="cdd">CDD</option>
+                  <option value="mission">Mission courte</option>
+                </select>
+              </label>
+              <button type="submit" class="btn primary">Rechercher un emploi</button>
+            </form>
+            <div class="hero-stats" aria-label="Statistiques de la plateforme">
+              <div class="stat">
+                <span class="stat-value" data-stat="offers">1200+</span>
+                <span class="stat-label">Offres actives</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" data-stat="companies">350+</span>
+                <span class="stat-label">Entreprises & agences</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" data-stat="countries">5</span>
+                <span class="stat-label">Pays couverts</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="card-illustration">
+              <div class="pill pill-success">Candidature envoyée ✔</div>
+              <div class="pill pill-info">Nouvelle mission disponible</div>
+              <div class="mock-profile">
+                <div class="avatar"></div>
+                <div class="profile-lines">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="recent-jobs-title">
+          <div class="section-header">
+            <h2 id="recent-jobs-title">Offres récentes</h2>
+            <a class="link" href="jobs.html">Voir toutes les offres</a>
+          </div>
+          <div id="recent-jobs" class="card-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="section section-alt" aria-labelledby="how-it-works-title">
+          <div class="section-header">
+            <h2 id="how-it-works-title">Comment ça marche ?</h2>
+            <p>Une expérience fluide pour les candidats et les recruteurs.</p>
+          </div>
+          <div class="two-columns">
+            <article class="info-card" aria-label="Parcours candidat">
+              <h3>Candidat</h3>
+              <ol>
+                <li>Créez votre profil ou postulez en un clic.</li>
+                <li>Filtrez les offres par métier, lieu, durée ou salaire.</li>
+                <li>Postulez en ligne et suivez vos candidatures.</li>
+              </ol>
+            </article>
+            <article class="info-card" aria-label="Parcours recruteur">
+              <h3>Recruteur</h3>
+              <ol>
+                <li>Publiez vos missions en quelques minutes.</li>
+                <li>Recevez et filtrez les candidatures en temps réel.</li>
+                <li>Collaborez avec votre équipe et exportez les CV.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="sectors-title">
+          <div class="section-header">
+            <h2 id="sectors-title">Secteurs populaires</h2>
+          </div>
+          <div class="chip-grid" id="popular-sectors"></div>
+        </section>
+
+        <section class="section section-alt" aria-labelledby="testimonials-title">
+          <div class="section-header">
+            <h2 id="testimonials-title">Ils nous font confiance</h2>
+          </div>
+          <div class="card-grid testimonials" id="testimonials"></div>
+        </section>
+
+        <section class="section" aria-labelledby="partners-title">
+          <div class="section-header">
+            <h2 id="partners-title">Partenaires</h2>
+          </div>
+          <div class="partners-row" id="partners"></div>
+        </section>
+      </section>
+
+      <!-- Vue Offres d'emploi -->
+      <section
+        id="jobs-view"
+        class="view"
+        aria-label="Liste des offres d'emploi"
+        hidden
+      >
+        <header class="page-header">
+          <h1>Offres d’emploi en intérim</h1>
+          <p>
+            Filtrez les missions par métier, localisation, durée, salaire et date de
+            publication.
+          </p>
+        </header>
+        <div class="layout">
+          <aside class="filters" aria-label="Filtres des offres">
+            <form id="job-filters">
+              <fieldset>
+                <legend>Métier</legend>
+                <input
+                  type="text"
+                  name="keyword"
+                  placeholder="Intitulé de poste, compétence..."
+                />
+              </fieldset>
+              <fieldset>
+                <legend>Ville / Pays</legend>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Ville, région ou pays"
+                />
+              </fieldset>
+              <fieldset>
+                <legend>Durée</legend>
+                <select name="duration">
+                  <option value="">Toutes</option>
+                  <option value="1-3">1 à 3 mois</option>
+                  <option value="3-6">3 à 6 mois</option>
+                  <option value="6+">Plus de 6 mois</option>
+                </select>
+              </fieldset>
+              <fieldset>
+                <legend>Salaire mensuel (min.)</legend>
+                <input type="number" name="salaryMin" min="0" step="100" />
+              </fieldset>
+              <fieldset>
+                <legend>Date de publication</legend>
+                <select name="published">
+                  <option value="">Toutes</option>
+                  <option value="24h">Dernières 24h</option>
+                  <option value="7d">Moins de 7 jours</option>
+                  <option value="30d">Moins de 30 jours</option>
+                </select>
+              </fieldset>
+              <button type="submit" class="btn primary full-width">
+                Appliquer les filtres
+              </button>
+              <button type="button" class="btn ghost full-width" id="reset-filters">
+                Réinitialiser
+              </button>
+            </form>
+          </aside>
+
+          <section class="results" aria-live="polite">
+            <div class="results-header">
+              <p id="results-count"></p>
+              <label class="sort">
+                <span>Trier par</span>
+                <select id="sort-select">
+                  <option value="newest">Les plus récentes</option>
+                  <option value="salary-desc">Salaire décroissant</option>
+                  <option value="salary-asc">Salaire croissant</option>
+                </select>
+              </label>
+            </div>
+            <div id="jobs-list" class="card-list"></div>
+            <nav
+              class="pagination"
+              aria-label="Pagination des offres"
+              id="jobs-pagination"
+            ></nav>
+          </section>
+        </div>
+      </section>
+
+      <!-- Vue Détail d’offre -->
+      <section
+        id="job-detail-view"
+        class="view"
+        aria-label="Détail de l'offre"
+        hidden
+      >
+        <button class="back-link" data-view="jobs">
+          ← Retour aux offres
+        </button>
+        <article id="job-detail" class="job-detail" aria-live="polite"></article>
+      </section>
+
+      <!-- Vue Recruteur -->
+      <section
+        id="recruiter-view"
+        class="view"
+        aria-label="Espace recruteur"
+        hidden
+      >
+        <header class="page-header">
+          <h1>Espace recruteur</h1>
+          <p>
+            Publiez vos offres, suivez les candidatures et gérez vos missions
+            d’intérim.
+          </p>
+        </header>
+        <div class="layout layout-vertical">
+          <section class="panel">
+            <h2>Publier une nouvelle offre</h2>
+            <form id="new-job-form" novalidate>
+              <div class="grid-2">
+                <label class="field">
+                  <span class="field-label">Titre du poste *</span>
+                  <input type="text" name="title" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Entreprise *</span>
+                  <input type="text" name="company" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Ville / Pays *</span>
+                  <input type="text" name="location" required />
+                </label>
+                <label class="field">
+                  <span class="field-label">Type de contrat *</span>
+                  <select name="contract" required>
+                    <option value="">Sélectionner</option>
+                    <option value="interim">Intérim</option>
+                    <option value="cdd">CDD</option>
+                    <option value="mission">Mission courte</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">Durée (en mois)</span>
+                  <input type="number" name="durationMonths" min="1" step="1" />
+                </label>
+                <label class="field">
+                  <span class="field-label">Salaire mensuel brut (€)</span>
+                  <input type="number" name="salary" min="0" step="50" />
+                </label>
+              </div>
+              <label class="field">
+                <span class="field-label">Secteur</span>
+                <input
+                  type="text"
+                  name="sector"
+                  placeholder="Logistique, BTP, IT..."
+                />
+              </label>
+              <label class="field">
+                <span class="field-label">Description détaillée *</span>
+                <textarea
+                  name="description"
+                  rows="5"
+                  required
+                  placeholder="Missions, profil recherché, conditions..."
+                ></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn primary">Publier l’offre</button>
+                <p class="hint">* Champs obligatoires</p>
+              </div>
+              <p
+                id="new-job-message"
+                class="form-message"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+          </section>
+
+          <section class="panel">
+            <h2>Vos offres publiées</h2>
+            <div id="recruiter-jobs" class="card-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Vue Admin -->
+      <section
+        id="admin-view"
+        class="view"
+        aria-label="Back-office administrateur"
+        hidden
+      >
+        <header class="page-header">
+          <h1>Back-office admin (simulation front-end)</h1>
+          <p>
+            Aperçu des fonctionnalités de gestion des utilisateurs, offres et
+            candidatures. La logique de sécurité sera gérée côté serveur.
+          </p>
+        </header>
+        <div class="layout layout-vertical">
+          <section class="panel">
+            <h2>Statistiques</h2>
+            <div class="stats-grid" id="admin-stats"></div>
+          </section>
+          <section class="panel">
+            <h2>Modération des offres</h2>
+            <div id="admin-jobs" class="card-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Candidature -->
+    <div
+      class="modal"
+      id="apply-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="apply-modal-title"
+    >
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-dialog" role="document">
+        <button
+          class="modal-close"
+          type="button"
+          aria-label="Fermer la fenêtre de candidature"
+          data-close-modal
+        >
+          ×
+        </button>
+        <h2 id="apply-modal-title">Postuler à cette offre</h2>
+        <p id="apply-job-title" class="modal-subtitle"></p>
+        <form id="apply-form" novalidate>
+          <label class="field">
+            <span class="field-label">Nom complet *</span>
+            <input type="text" name="fullName" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span class="field-label">Email *</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">Téléphone *</span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              autocomplete="tel"
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">CV (PDF ou DOC) *</span>
+            <input
+              type="file"
+              name="cv"
+              accept=".pdf,.doc,.docx"
+              required
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">Lettre de motivation (optionnelle)</span>
+            <textarea
+              name="coverLetter"
+              rows="4"
+              placeholder="Quelques lignes pour vous présenter..."
+            ></textarea>
+          </label>
+          <fieldset>
+            <legend>Mode de candidature</legend>
+            <label class="checkbox">
+              <input
+                type="checkbox"
+                name="quickApply"
+                value="1"
+                checked
+              />
+              <span>Candidature rapide (création de profil ultérieure)</span>
+            </label>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">
+              Postuler maintenant
+            </button>
+          </div>
+          <p
+            id="apply-message"
+            class="form-message"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div>
+          <div class="logo">
+            <span class="logo-mark">Y</span>
+            <span class="logo-text">Yanza Intérim</span>
+          </div>
+          <p>
+            Plateforme de recrutement spécialisée en intérim et missions temporaires,
+            conçue pour les candidats, entreprises et agences.
+          </p>
+          <div class="socials" aria-label="Réseaux sociaux">
+            <a href="#" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.6 20v-6h2.1l.3-2.3h-2.4V9.7c0-.7.2-1.2 1.2-1.2h1.3V6.4c-.2 0-1.1-.1-2.1-.1-2.1 0-3.6 1.3-3.6 3.7v2h-2.2V14h2.2v6h3.2Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter/X">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4 5h3.1l4 4.8 4.3-4.8H19l-5.6 6.1L19.5 19h-3.1l-4.3-5.1L7.3 19H4.5l6.1-6.9Z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M5.2 9H2.4V19h2.8V9Zm.2-3.5a1.7 1.7 0 1 0-3.4 0 1.7 1.7 0 0 0 3.4 0ZM21 19v-6.1c0-3.3-1.8-4.8-4.2-4.8-1.9 0-2.8 1-3.2 1.7V9h-2.8v10h2.8v-5.6c0-1 .2-2 1.6-2 1.3 0 1.3 1.2 1.3 2.1V19H21Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-columns">
+          <div>
+            <h3>Candidats</h3>
+            <ul>
+              <li><button data-view="jobs" class="link">Rechercher un emploi</button></li>
+              <li><button data-view="home" class="link">Secteurs populaires</button></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Recruteurs</h3>
+            <ul>
+              <li><button data-view="recruiter" class="link">Publier une offre</button></li>
+              <li><button data-view="recruiter" class="link">Tableau de bord</button></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Entreprise</h3>
+            <ul>
+              <li><a href="#home" class="link">À propos</a></li>
+              <li><a href="#home" class="link">Confidentialité</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="current-year"></span> Yanza Intérim. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
+
+
